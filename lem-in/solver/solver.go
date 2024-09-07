@@ -70,3 +70,42 @@ func isVisited(a *antfarm.Ant, r *antfarm.Room) bool {
 	}
 	return false
 }
+
+func AllPath(f antfarm.Antfarm) [][]*antfarm.Room {
+	tab := [][]*antfarm.Room{}
+	str := []*antfarm.Room{f.Start}
+	a := &antfarm.Ant{Name: 0,Room: f.Start}
+	for _, room := range f.Start.Links {
+		str = append(str, room)
+		Move(a,room,f)
+		if room == f.End {
+			tab = append(tab, str)
+			str = []*antfarm.Room{f.Start}
+		}
+		for a.Room != f.End {
+			if LinkToEnd(a, f){
+				Move(a, f.End, f)
+				str = append(str,f.End)
+				tab = append(tab, str)
+				str = []*antfarm.Room{f.Start}
+			} else {
+				for _, room := range a.Room.Links {
+					if room.Empty && !isVisited(a, room) {
+						Move(a, room, f)
+						str = append(str, room)
+						break
+					}
+				}
+			}
+		}
+	}
+	return tab
+}
+
+func FollowPath(ant *antfarm.Ant ,path []*antfarm.Room,f antfarm.Antfarm) {
+	for _, room := range path {
+		if ant.Room != room {
+			Move(ant,room,f)
+		}
+	}
+}
