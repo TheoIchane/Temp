@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/css/profile.css">
+        <title>Profil de {{.User.Username}}</title>
+        <link rel="stylesheet" href="../static/css/index.css">
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+            rel="stylesheet">
+        <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+        <style>
+            html, body, pre, code, kbd, samp {
+                font-family: 'Press Start 2P';
+            }
+          </style>
+    </head>
+    <body id="body">
+
+        <div id="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        {{if .Error}}
+        <h2>{{.Error}}</h2>
+        <a href="/login">Se connecter</a> <a href="/">Page principale</a>
+        {{else}}
+        {{if .Data.User}}
+        <div class="nes-container is-rounded" id="profile-container">
+            <!-- Icône de profil -->
+            <div class="profile-header">
+                <img class="profile-pic" src="{{.Data.User.Avatar}}"
+                    alt="Profile Picture">
+                <h1>Profil de {{.Data.User.Username}}</h1>
+            </div>
+            {{if eq .Data.User.Username .User.Username}}
+            <p>Tu veux changer ton Avatar?</p>
+
+            <form action="/uploads/avatars" method="POST"
+                enctype="multipart/form-data" id="image_upload_form">
+                <input type="file" id="image_upload" name="avatar"
+                    accept="image/*"
+                    required
+                    onchange="document.getElementById('image_upload_form').submit();"
+                    style="display: none;">
+                <button type="button"
+                    onclick="document.getElementById('image_upload').click();"
+                    class="nes-btn is-primary">Changer d'Avatar</button>
+            </form>
+            {{end}}
+            <!-- Informations utilisateur -->
+            <div class="profile-info">
+                <p>Email: <span>{{.Data.User.Email}}</span></p>
+                <p>Admin: <span>{{if
+                        .Data.User.Admin}}Yes{{else}}No{{end}}</span></p>
+            </div>
+
+            {{if eq .Data.User.Username .User.Username}}
+            <!-- Bouton de déconnexion -->
+            <a href="/logout" class="nes-btn is-error" id="nav-btn">Se
+                Déconnecter</a>
+            {{end}}
+
+            <!-- Liens de navigation -->
+            <a href="/" class="nes-btn is-success">Page Principale</a>
+        </div>
+        {{end}}
+        <div class="posts">
+            <div class="user_posts">
+                <h2>Post de {{.Data.User.Username}}</h2>
+                {{ if .Data.Posts}}
+                {{range .Data.Posts}}
+                <div class="nes-container is-rounded" id="post">
+                    <h4 class="title">{{.Title}}</h4>
+                    <div class="without-title">
+                        <div class="post-info">
+                            <a
+                                href="/profil?{{.Username}}"><img
+                                    src="{{.Avatar}}"
+                                    alt="Avatar"
+                                    class="profile-pic"><br> Par
+                                <strong>{{.Username}}</strong></a>
+                                <div class="date">
+                                    le {{.Date}}
+                                    <br><br></div>
+                            <ul class="groupe">
+                                <li id="test" class="menu-deroulant">
+                                    <h4>Catégories:</h4>
+                                    <ul class="sous-menu">
+                                        {{range .Topic}}
+                                        <li>{{.}}</li>
+                                        {{end}}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="/post?id={{.ID}}" class="post-contents"
+                            id="contents_text">
+                            <div class="nes-container is-rounded"
+                                id="content_text">
+                                <p class="post-content">{{.Content}}</p>
+                                {{if .PostImage}}
+                                <img class="post-images" src="{{.PostImage}}"
+                                    alt="Post Images">
+                                {{end}}
+
+                                <div class="post-actions">
+                                    {{if .Admin}}
+                                    <a href="/delete?id={{.ID}}">🗑</a>
+                                    {{end}}
+                                </div>
+                            </div>
+
+                        </a>
+                    </div>
+                </div>
+                {{end}}
+                {{end}}
+            </div>
+            <div class="liked_posts">
+                <h2>Posts aimés</h2>
+                {{ if .Data.Liked_Posts}}
+                {{range .Data.Liked_Posts}}
+                <div class="nes-container is-rounded" id="post">
+                    <h4 class="title">{{.Title}}</h4>
+                    <div class="without-title">
+                        <div class="post-info">
+                            <a
+                                href="/profil?{{.Username}}"><img
+                                    src="{{.Avatar}}"
+                                    alt="Avatar"
+                                    class="profile-pic"><br> Par
+                                <strong>{{.Username}}</strong></a>
+                                <div class="date">
+                                    le {{.Date}}
+                                    <br><br></div>
+                            <ul class="groupe">
+                                <li id="test" class="menu-deroulant">
+                                    <h4>Catégories:</h4>
+                                    <ul class="sous-menu">
+                                        {{range .Topic}}
+                                        <li>{{.}}</li>
+                                        {{end}}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="/post?id={{.ID}}" class="post-contents"
+                            id="contents_text">
+                            <div class="nes-container is-rounded"
+                                id="content_text">
+                                <p class="post-content">{{.Content}}</p>
+                                {{if .PostImage}}
+                                <img class="post-images" src="{{.PostImage}}"
+                                    alt="Post Images">
+                                {{end}}
+
+                                <div class="post-actions">
+                                    {{if .Admin}}
+                                    <a href="/delete?id={{.ID}}">🗑</a>
+                                    {{end}}
+                                </div>
+                            </div>
+
+                        </a>
+                    </div>
+                </div>
+                {{end}}
+                {{end}}
+            </div>
+        </div>
+
+        {{end}}
+        <script src="../static/js/profile.js"></script>
+    </body>
+</html>

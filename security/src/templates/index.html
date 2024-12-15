@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{.Title}}</title>
+        <link rel="stylesheet" href="../static/css/index.css">
+        <!-- <link rel="stylesheet" href="../static/css/darkmode.css"> -->
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+            rel="stylesheet">
+        <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../static/css/popup.css">
+        <style>
+            html, body, pre, code, kbd, samp {
+                font-family: 'Press Start 2P';
+            }
+          </style>
+    </head>
+    <body id="body">
+        
+        <!-- Barre de navigation -->
+
+        {{template "navbar" .User}}
+
+       
+
+        <div class="main-container">
+            <div class="hi">
+                <div class="nes-balloon from-right" id="balloon">
+                    {{if .User}}
+                    <p>Bienvenue {{.User.Username}} !</p>
+                    {{else}}
+                    <p><a href="/login">Connectez-vous</a> pour interagir
+                        avec
+                        les posts et les commentaires.</p>
+                    {{end}}
+                </div>
+                <section class="icon-list">
+                    <i class="nes-octocat" id="chat"></i>
+                </section>
+            </div>
+            <!-- Contenu principal -->
+            <div class="content-container">
+                <main class="forum-container">
+                    <h2>Derniers Posts</h2>
+                    <!-- Exemple de posts -->
+                    {{ if .Data.Posts}}
+                    {{range .Data.Posts}}
+                    {{template "post" .}}
+                    {{end}}
+                    {{end}}
+                </main>
+            </div>
+        </div>
+        {{template "popup"}}
+        <!-- Pied de page -->
+        {{template "footer"}}
+        <script src="../static/js/index.js"></script>
+    </body>
+</html>

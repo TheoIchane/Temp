@@ -1,0 +1,7 @@
+*.db
+
+/uploads/
+*.env
+forum.crt
+
+forum.key

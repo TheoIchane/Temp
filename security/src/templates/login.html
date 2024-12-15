@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login - Forum</title>
+        <link rel="stylesheet" href="../static/css/login.css">
+        <link rel="stylesheet" href="../static/css/index.css">
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+            rel="stylesheet">
+        <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+        <style>
+            html, body, pre, code, kbd, samp {
+                font-family: 'Press Start 2P';
+            }
+          </style>
+    </head>
+    <body id="body">
+
+        <div id="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="nes-container is-rounded" id="login-container">
+            <h2>Connexion au Forum</h2>
+            <form action="/login" method="POST">
+                {{.Error}}
+                <div class="input-group">
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" name="email" required
+                        placeholder="Votre email">
+                </div>
+                <div class="input-group">
+                    <label for="password">Mot de passe :</label>
+                    <div class="password-container">
+                        <input type="password" id="password" name="password"
+                            required placeholder="Votre mot de passe">
+                        <span id="togglePassword"
+                            class="eye-icon">👲🏻</span>
+                        <!-- Icône de l'œil -->
+                    </div>
+                </div>
+                <button type="submit" class="nes-btn is-success">Se
+                    connecter</button>
+            </form>
+            <section class="icon-list">
+                {{if .Data.Google}}
+                <a href="{{.Data.Google}}" id="icon"> <i
+                        class="nes-icon google" id="icon-img"></i> </a>
+                {{end}}
+                {{if .Data.Github}}
+                <a href="{{.Data.Github}}" id="icon"> <i
+                        class="nes-icon github" id="icon-img"></i> </a>
+                {{end}}
+            </section>
+            <a href="/register"
+                class="nes-btn is-primary" id="login-link">Créer un compte</a>
+            <a href="/"
+                class="nes-btn is-error" id="login-link">Revenir au Forum</a>
+        </div>
+        <script src="../static/js/login.js"></script>
+    </body>
+</html>

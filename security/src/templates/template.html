@@ -1,0 +1,274 @@
+{{define "popup"}}
+<div class="popup-overlay" id="popupOverlay">
+    <div class="nes-container is-rounded" id="popup">
+        <div class="popup-content">
+            <a href="/login">Connectez-vous</a>
+            pour interagir
+            avec
+            les posts et les commentaires.
+        </div>
+        <button class="nes-btn is-error" id="closePopup">Fermer</button>
+    </div>
+</div>
+{{end}}
+
+{{define "post"}}
+<div class="nes-container is-rounded" id="post">
+    <h4 class="title">{{.Title}}</h4>
+    <div class="without-title">
+        <div class="post-info">
+            <a
+                href="/profil?{{.Username}}"><img src="{{.Avatar}}"
+                    alt="Avatar"
+                    class="profile-pic" style="
+    background-color: white;"><br> Par
+                <strong>{{.Username}}</strong></a>
+            <div class="date">
+                le {{.Date}}
+                <br><br></div>
+            <ul class="groupe">
+                <li id="test" class="menu-deroulant">
+                    <h4>Catégories:</h4>
+                    <ul class="sous-menu">
+                        {{range .Topic}}
+                        <li>{{.}}</li>
+                        {{end}}
+                    </ul>
+
+                </li>
+            </ul>
+            <img src="../static/images/kzhba.png" alt="fleches directionnelles">
+            <!-- <img src="../static/images/qmbpbxzk.png" alt="Touches multi"> -->
+        </div>
+
+        <a href="/post?id={{.ID}}" class="post-contents" id="contents_text">
+            <div class="nes-container is-rounded" id="content_text">
+                <p class="post-content">{{.Content}}</p>
+                {{if .PostImage}}
+                <img class="post-images" src="{{.PostImage}}" alt="Post Images">
+                {{end}}
+
+                <div class="post-actions">
+                    {{if .Admin}}
+                    <a href="/delete?id={{.ID}}">🗑</a>
+                    {{end}}
+                </div>
+            </div>
+
+        </a>
+    </div>
+    {{if .Popup}}
+    <div class="post-ratings-container">
+        <div class="post-rating">
+            <button type="button" onclick="openPopup()"
+                class="post-rating-button"
+                style="border: none; background: none;"><img
+                    class="post-rating-button"
+                    src="https://res.cloudinary.com/dbktfdy6l/image/upload/v1729692727/deqkpwu_jlxvd3.png"
+                    alt="Like" style="filter: brightness(0.8);" /></button>
+            <span class="post-rating-count">{{.Like}}</span>
+        </div>
+        <div class="post-rating">
+            <button type="button" onclick="openPopup()"
+                class="post-rating-button"
+                style="border: none; background: none;"><img
+                    class="post-rating-button"
+                    src="https://res.cloudinary.com/dbktfdy6l/image/upload/v1729693066/vrueqkgu_bxeoyk.png"
+                    alt="Dislike" /></button>
+            <span class="post-rating-count">{{.Dislike}}</span>
+        </div>
+    </div>
+    {{else}}
+    <div class="post-ratings-container">
+        <div class="post-rating">
+            <a href="/like?id={{.ID}}">
+                <img
+                    class="post-rating-button"
+                    src="https://res.cloudinary.com/dbktfdy6l/image/upload/v1729692727/deqkpwu_jlxvd3.png"
+                    alt="Like"
+                    {{if not .User_Like}}
+                    style="filter: brightness(0.8);"
+                    {{end}} />
+            </a>
+            <span class="post-rating-count">{{.Like}}</span>
+        </div>
+        <div class="post-rating">
+            <a href="/dislike?id={{.ID}}">
+                <img
+                    class="post-rating-button nes-cursor"
+                    src="https://res.cloudinary.com/dbktfdy6l/image/upload/v1729693066/vrueqkgu_bxeoyk.png"
+                    alt="Dislike"
+                    {{if .User_Dislike}}
+                    style="filter: brightness(0.8);"
+                    {{end}} />
+            </a>
+            <span class="post-rating-count">{{.Dislike}}</span>
+        </div>
+    </div>
+    {{end}}
+</div>
+{{if .IsUser}}
+<form method="post" action="/comments?id={{.ID}}">
+    <textarea name="content" id="comment-text"
+        placeholder="Your Comment..."
+        required></textarea>
+    <button type="submit">Poster</button>
+</form>
+{{end}}
+{{if .Comments}}
+{{template "comments" .Comments}}
+{{end}}
+{{end}}
+
+{{define "comments"}}
+<div class="comments">
+    {{range .}}
+    <div class="comment">
+        <div class="nes-container is-rounded" id="comment-info">
+            <a
+                href="/profil?{{.Username}}"><img src="{{.Avatar}}"
+                    alt="Avatar"
+                    class="comment-avatar"> <br>
+                Par <strong>{{.Username}}</strong></a> <br> le {{.Date}}
+        </div>
+        <div class="nes-balloon from-left" id="comment-content">
+            <p>{{.Content}}</p>
+
+            {{if .Popup}}
+            <div class="post-ratings-container">
+                <div class="post-rating">
+                    <button type="button" onclick="openPopup()"
+                        class="post-rating-button"
+                        style="border: none; background: none;"><img
+                            class="post-rating-button"
+                            src="https://res.cloudinary.com/dbktfdy6l/image/upload/v1729692727/deqkpwu_jlxvd3.png"
+                            alt="Like"
+                            style="filter: brightness(0.8);" /></button>
+                    <span class="post-rating-count">{{.Like}}</span>
+                </div>
+                <div class="post-rating">
+                    <button type="button" onclick="openPopup()"
+                        class="post-rating-button"
+                        style="border: none; background: none;"><img
+                            class="post-rating-button"
+                            src="https://res.cloudinary.com/dbktfdy6l/image/upload/v1729693066/vrueqkgu_bxeoyk.png"
+                            alt="Dislike" /></button>
+                    <span class="post-rating-count">{{.Dislike}}</span>
+                </div>
+            </div>
+            {{else}}
+            <div class="post-ratings-container">
+                <div class="post-rating">
+                    <a href="/like?id={{.Post_ID}}&comment_id={{.ID}}">
+                        <img
+                            class="post-rating-button"
+                            src="https://res.cloudinary.com/dbktfdy6l/image/upload/v1729692727/deqkpwu_jlxvd3.png"
+                            alt="Like"
+                            {{if not .User_Like}}
+                            style="filter: brightness(0.8);"
+                            {{end}} />
+                    </a>
+                    <span class="post-rating-count">{{.Like}}</span>
+                </div>
+                <div class="post-rating">
+                    <a href="/dislike?id={{.Post_ID}}&comment_id={{.ID}}">
+                        <img
+                            class="post-rating-button nes-cursor"
+                            src="https://res.cloudinary.com/dbktfdy6l/image/upload/v1729693066/vrueqkgu_bxeoyk.png"
+                            alt="Dislike"
+                            {{if .User_Dislike}}
+                            style="filter: brightness(0.8);"
+                            {{end}} />
+                    </a>
+                    <span class="post-rating-count">{{.Dislike}}</span>
+                </div>
+            </div>
+            {{end}}
+        </div>
+
+    </div>
+    {{end}}
+</div>
+{{end}}
+{{define "navbar"}}
+<nav class="navbar">
+    <div class="container">
+        <h1 class="logo"><a href="/">GamePlayLand</a></h1>
+        <button class="nes-btn" id="toggleBtn" onclick="mode()"> Light or Dark
+        </button>
+        <div class="nav-links">
+            {{ if . }}
+            <a href="/topics" class="nes-btn is-warning"
+                id="nav-btn">Catégories</a>
+            <a href="/post/create" class="nes-btn" id="nav-btn">Créer un
+                Post</a>
+            <a href="/logout" class="nes-btn is-error" id="nav-btn">Se
+                Déconnecter</a>
+            <a
+                href="/profil?{{.Username}}" class="profile_pic"><img
+                    class="nes-avatar is-large"
+                    src="{{.Avatar}}"
+                    alt="Avatar"></a>
+            {{ else }}
+            <a href="/topics" class="nes-btn is-warning"
+                id="nav-btn">Catégories</a>
+            <a href="/login" class="nes-btn is-primary">Se connecter</a>
+            <a href="/register" class="nes-btn is-success">S'inscrire</a>
+            {{ end }}
+        </div>
+    </div>
+</nav>
+<div id="canvas-container">
+    <canvas id="canvas"></canvas>
+</div>
+{{end}}
+{{define "footer"}}
+<footer>
+    <p>&copy; 2024 Mon Forum. Tous droits réservés.</p>
+</footer>
+{{end}}
+
+{{define "posts"}}
+<div style="text-align: center;">
+    <form id="image_upload_form" action="/uploads/posts" method="POST"
+        enctype="multipart/form-data">
+        <input type="file" id="image_upload" name="image" accept="image/*"
+            required
+            onchange="document.getElementById('image_upload_form').submit();"
+            style="display: none;">
+        <button type="button"
+            onclick="document.getElementById('image_upload').click();"
+            class="nes-btn is-primary">Charger une image</button>
+    </form>
+
+    <form method="post" style="margin-top: 20px;">
+        <div style="margin-bottom: 15px; text-align: left;">
+            <label for="title"
+                style="display: block; font-weight: bold;">Titre</label>
+            <input type="text" name="title" id="title" maxlength="25"
+                placeholder="Entrez un titre ici" class="nes-input" required>
+        </div>
+        <div style="margin-bottom: 15px; text-align: left;">
+            <label for="content"
+                style="display: block; font-weight: bold;">Contenu</label>
+            <textarea name="content" id="content" maxlength="500"
+                placeholder="Écrivez votre contenu ici" class="nes-textarea"
+                required></textarea>
+        </div>
+        <div class="topics" style="text-align: left;">
+            <label
+                style="font-weight: bold; display: block; margin-bottom: 10px;">Catégories</label>
+            {{range .}}
+            <div style="margin-bottom: 5px;">
+                <input type="checkbox" name="topic" id="{{.Title}}"
+                    value="{{.ID}}" {{if eq .ID 1}}checked{{end}}>
+                <label for="{{.Title}}">{{.Title}}</label>
+            </div>
+            {{end}}
+        </div>
+
+        <button type="submit" class="nes-btn" style="margin-top: 20px;">Créer un
+            post</button>
+    </form>
+</div>
+{{end}}

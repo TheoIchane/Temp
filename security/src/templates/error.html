@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{.Title}}</title>
+        <link rel="stylesheet" href="/static/css/error.css">
+        <link rel="stylesheet" href="../static/css/index.css">
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+            rel="stylesheet">
+        <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+        <style>
+            html, body, pre, code, kbd, samp {
+                font-family: 'Press Start 2P';
+            }
+          </style>
+    </head>
+    <body>
+        <h1>{{.Error}} - {{.Title}}</h1>
+        <a href="/"><p>Sorry, the page you're looking for doesn't exist or
+                something went wrong.</p></a>
+        <a href="/">Retour à la page principale</a>
+    </body>
+</html>

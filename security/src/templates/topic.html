@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{.Title}}</title>
+        <link rel="stylesheet" href="../static/css/index.css">
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+            rel="stylesheet">
+        <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../static/css/popup.css">
+        <style>
+            html, body, pre, code, kbd, samp {
+                font-family: 'Press Start 2P';
+            }
+          </style>
+    </head>
+    <body id="body">
+        {{template "navbar" .User}}
+        <div class="main-container">
+            <div class="content-container">
+                <main class="forum-container">
+                    {{if .Data.Topic}}
+                    <h3>{{.Data.Topic.Title}}</h3>
+                    <h4>{{.Data.Topic.Content}}</h4>
+                    {{range .Data.Posts}}
+                    {{template "post" .}}
+                    {{end}}
+                    {{end}}
+                    {{if .Data.Topics}}
+                    <h2> Toutes les catégories:</h2>
+                    <div class="topics">
+                        {{range .Data.Topics}}
+                        <div class="topic">
+                            <a href="/topics/{{.ID}}" class="topic_content">
+                                <h3>{{.Title}}</h3>
+                                <h4>{{.Content}}</h4>
+                            </a>
+                        </div>
+                        {{end}}
+                    </div>
+                    {{end}}
+                </main>
+            </div>
+        </div>
+        {{template "popup"}}
+        {{template "footer"}}
+        <script src="../static/js/index.js"></script>
+    </body>
+</html>

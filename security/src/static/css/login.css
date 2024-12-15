@@ -1,0 +1,119 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#body {
+    background-image: url("https://res.cloudinary.com/dbktfdy6l/image/upload/v1732613729/1_tkgrrf.png");
+}
+
+#body-dark {
+    background-image: url("../images/Dark\ mode.jpg");
+    
+}
+/* Conteneur principal */
+#login-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-height: 85%;
+    width: 30%;
+    text-align: center;
+}
+
+/* Titre */
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 80%;
+}
+
+/* Message d'erreur */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+/* Groupes d'input */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 60%;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.input-group input {
+    width: 100%;
+    font-size: 55%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #333;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+
+.password-container {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 2%;
+    top: -27%;
+    transform: translateY(50%);
+    cursor: pointer;
+}
+
+.nes-btn {
+    width: 60%;
+    font-size: 40%;
+}
+
+#icon-img {
+    width: 10%;
+}
+
+section {
+    margin: 5% 0;
+}
+
+#login-link {
+    margin: 2% 0;
+}
+
+
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Derrière le contenu */
+    overflow: hidden;
+}
+
+#canvas {
+    display: block; /* Supprime les marges par défaut */
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Empêche toute interaction */
+    filter: blur(1px);
+}
+

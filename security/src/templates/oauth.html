@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login - Forum</title>
+        <link rel="stylesheet" href="../static/css/login.css">
+        <link rel="stylesheet" href="../static/css/index.css">
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+            rel="stylesheet">
+        <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+        <style>
+            html, body, pre, code, kbd, samp {
+                font-family: 'Press Start 2P';
+            }
+          </style>
+    </head>
+    <body #body>
+        <div class="login_container">
+            {{if .Error}}
+            <div class="error">
+                {{.Error}}
+            </div>
+            {{end}}
+            <h2>Choisi un Nom d'Utilisateur</h2>
+            <form action="/registeroauth" method="post">
+                <div class="input-group">
+                    <label for="username">Nom d'utilisateur :</label>
+                    <input type="text" id="username" name="username" required
+                        placeholder="Choisissez un nom d'utilisateur">
+                </div>
+                <button type="submit" class="login-btn">Valider</button>
+            </form>
+        </div>
+        <script src="../static/js/login.js"></script>
+    </body>
+</html>
