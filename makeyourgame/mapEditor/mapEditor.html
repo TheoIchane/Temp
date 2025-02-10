@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="editor.css">
+        <title>Document</title>
+    </head>
+    <body>
+        <label for="width">Width:</label>
+        <input id="width" type="text">
+
+        <label for="height">Height:</label>
+        <input id="height" type="text">
+        <button onclick="createGrid()">Start</button>
+        <div style="display: flex;flex-direction: row;"><div id="grid"></div>
+            <p id="result"></p></div>
+
+        <div id="selectItem">
+            <button id="wall" onclick="selectItem('wall')">Wall</button>
+            <button id="borderWall" onclick="buildWall()">Put Wall on All Border
+                Cases</button>
+            <button id="dot" onclick="selectItem('dot')">Dot</button>
+            <button id="dots" onclick="fillWithDot()">Fill Blank With
+                Dot</button>
+            <button id="power-up"
+                onclick="selectItem('power-up')">PowerUp</button>
+            <button id="ghost-lair" onclick="selectItem('ghost-lair')">Ghost
+                Lair</button>
+            <button id="pacman" onclick="selectItem('pacman')">PacMan</button>
+            <button id="empty" onclick="selectItem('empty')">Empty</button>
+            <button id="reset" onclick="resetGrid()">Reset</button>
+        </div>
+        <script src="mapEditor.js"></script>
+    </body>
+</html>

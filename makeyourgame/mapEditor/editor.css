@@ -1,0 +1,55 @@
+#grid {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(65, 65, 65);
+}
+
+#result {
+    max-width: 50%;
+    margin-left: 10px;
+}
+
+#grid div {
+    width: 20px;
+    height: 20px;
+}
+
+#grid button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+}
+
+.dot {
+    border-radius: 50%;
+    border: 5px solid rgb(65, 65, 65);
+    box-sizing: border-box;
+    background-color: rgb(228, 168, 58);
+}
+
+.power-up {
+    border-radius: 50%;
+    border: 4px solid rgb(65, 65, 65);
+    box-sizing: border-box;
+    background-color: rgb(228, 168, 58);
+}
+
+.wall {
+    background-color: rgb(23, 151, 243);
+    box-sizing: border-box;
+}
+
+.pacman {
+    border-radius: 50%;
+    border: 2px solid rgb(65, 65, 65);
+    box-sizing: border-box;
+    background-color: rgb(236, 222, 19);
+}
+
+.ghost-lair {
+    background-color: rgba(238, 116, 136, 0.475);
+}
+
+.empty {
+    background-color: rgb(65, 65, 65);
+}

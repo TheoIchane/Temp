@@ -1,0 +1,48 @@
+#grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#grid div {
+    width: 20px;
+    height: 20px;
+}
+
+.dot {
+    border-radius: 50%;
+    border: 5px solid white;
+    box-sizing: border-box;
+    background-color: rgb(190, 24, 190);
+}
+
+.power-up {
+    border-radius: 50%;
+    border: 3px solid white;
+    box-sizing: border-box;
+    background-color: rgb(213, 120, 14);
+}
+
+.wall {
+    background-color: blue;
+    box-sizing: border-box;
+}
+
+.pacmanL {
+    background-image: url(sprite/pacmanL.png);
+    background-position-x: 0px;
+}
+
+.pacmanR {
+    background-image: url(sprite/pacmanR.png);
+    background-position-x: 0px;
+}
+
+.pacmanU {
+    background-image: url(sprite/pacmanU.png);
+    background-position-x: 0px;
+}
+
+.pacmanD {
+    background-image: url(sprite/pacmanD.png);
+    background-position-x: 0px;
+}
