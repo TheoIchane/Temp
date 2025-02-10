@@ -34,20 +34,20 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 				errorMessages = append(errorMessages, "Ce compte existe dejà, veuillez vous connecter.")
 			} else {
 				// Vérification de la validité de l'email
-			if !middleware.IsValidEmail(email) {
-				errorMessages = append(errorMessages, "Invalid Email.")
-			}
+				if !middleware.IsValidEmail(email) {
+					errorMessages = append(errorMessages, "Invalid Email.")
+				}
 
-			UsernameErrors := middleware.IsValidUsername(username)
-			if len(UsernameErrors) > 0 {
-				errorMessages = append(errorMessages, UsernameErrors...)
-			}
+				UsernameErrors := middleware.IsValidUsername(username)
+				if len(UsernameErrors) > 0 {
+					errorMessages = append(errorMessages, UsernameErrors...)
+				}
 
-			// Validation du mot de passe
-			passwordErrors := middleware.ValidatePassword(password)
-			if len(passwordErrors) > 0 {
-				errorMessages = append(errorMessages, passwordErrors...)
-			}
+				// Validation du mot de passe
+				passwordErrors := middleware.ValidatePassword(password)
+				if len(passwordErrors) > 0 {
+					errorMessages = append(errorMessages, passwordErrors...)
+				}
 			}
 			// Si aucune erreur, créer un nouvel utilisateur
 			if len(errorMessages) == 0 {
@@ -79,7 +79,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	GITHUB_CONFIG.GetEnv("github")
 	GOOGLE_CONFIG.GetEnv("google")
-	p.Data["Google"] = GOOGLE_CONFIG.ConfURL_Register("200")
-	p.Data["Github"] = GITHUB_CONFIG.ConfURL_Register("200")
+	p.Data["Google"] = GOOGLE_CONFIG.ConfURL_Register()
+	p.Data["Github"] = GITHUB_CONFIG.ConfURL_Register()
 	RenderTemplate(w, "register.html", p)
 }

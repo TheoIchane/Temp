@@ -8,20 +8,17 @@ import (
 )
 
 var GOOGLE_CONFIG = &OAUTH_CONFIG{
-	Scope: []string{"email"},
+	Scope:    []string{"email"},
 	Endpoint: GoogleEndpoint,
 }
 var GoogleEndpoint = Endpoint{
 	AuthURL:       "https://accounts.google.com/o/oauth2/auth",
 	TokenURL:      "https://oauth2.googleapis.com/token",
 	DeviceAuthURL: "https://oauth2.googleapis.com/device/code",
-	AuthStyle: 0,
+	AuthStyle:     0,
 }
 
 func GoogleHandler(w http.ResponseWriter, r *http.Request) {
-	if r.FormValue("state") != "200" {
-		ErrorHandler(w, r, http.StatusUnauthorized)
-	}
 	code := r.FormValue("code")
 	state := r.FormValue("state")
 	client := &GoogleClient{}
@@ -29,46 +26,46 @@ func GoogleHandler(w http.ResponseWriter, r *http.Request) {
 	var err error
 	GOOGLE_CONFIG.GetEnv("google")
 	if code != "" {
-		resp := GOOGLE_CONFIG.Token(code,"200")
+		resp := GOOGLE_CONFIG.Token(code)
 		client = Client_Google(resp)
 		if client == nil {
-			ErrorHandler(w,r,http.StatusInternalServerError)
+			ErrorHandler(w, r, http.StatusInternalServerError)
 			return
 		}
 	}
 	switch state {
-		case "login":
-			cred, err = data.GetCredentialsByID([]byte(client.ID))
-			if err != nil {
-				http.Redirect(w,r,"/login?error=login",http.StatusSeeOther)
-				return
-			}
-			Oauth_user = cred.User
-		case "register":
-			fmt.Println(client.ID)
-			if data.IsCredExist(middleware.Encrypt(client.ID)) {
-				RenderTemplate(w,"register.html",Page{
-					Title: "Register",
-					Error: "Ce compte existe, veuillez vous connecter. ",
-				})
-				return
-			}
-			Oauth_user = &data.User{
-				ID: data.GenerateUUID(),
-				Password: middleware.Encrypt(client.ID),
-			}
-			Creds = &data.Credentials{
-				ID: middleware.Encrypt(client.ID),
-				Credential: "google",
-			}
-			http.Redirect(w,r,"/registeroauth",http.StatusSeeOther)
+	case "login":
+		cred, err = data.GetCredentialsByID([]byte(client.ID))
+		if err != nil {
+			http.Redirect(w, r, "/login?error=login", http.StatusSeeOther)
 			return
-		default:
-			ErrorHandler(w,r,http.StatusInternalServerError)
+		}
+		Oauth_user = cred.User
+	case "register":
+		fmt.Println(client.ID)
+		if data.IsCredExist(middleware.Encrypt(client.ID)) {
+			RenderTemplate(w, "register.html", Page{
+				Title: "Register",
+				Error: "Ce compte existe, veuillez vous connecter. ",
+			})
 			return
+		}
+		Oauth_user = &data.User{
+			ID:       data.GenerateUUID(),
+			Password: middleware.Encrypt(client.ID),
+		}
+		Creds = &data.Credentials{
+			ID:         middleware.Encrypt(client.ID),
+			Credential: "google",
+		}
+		http.Redirect(w, r, "/registeroauth", http.StatusSeeOther)
+		return
+	default:
+		ErrorHandler(w, r, http.StatusInternalServerError)
+		return
 	}
-	Cookie(w,Oauth_user)
-	http.Redirect(w,r,"/",http.StatusSeeOther)
+	Cookie(w, Oauth_user)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func RegisterOauth(w http.ResponseWriter, r *http.Request) {
@@ -85,15 +82,15 @@ func RegisterOauth(w http.ResponseWriter, r *http.Request) {
 			Creds.User = Oauth_user
 			err = Creds.Insert()
 			if err != nil {
-				ErrorHandler(w,r,http.StatusInternalServerError)
+				ErrorHandler(w, r, http.StatusInternalServerError)
 				return
 			}
-			Cookie(w,Oauth_user)
-			http.Redirect(w,r,"/",http.StatusSeeOther)
+			Cookie(w, Oauth_user)
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		} else {
 			p.Error = "Username already used"
 		}
 	}
-	RenderTemplate(w,"oauth.html",p)
+	RenderTemplate(w, "oauth.html", p)
 }

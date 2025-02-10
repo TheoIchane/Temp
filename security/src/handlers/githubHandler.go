@@ -19,13 +19,10 @@ var GithubEndpoint = Endpoint{
 }
 
 func GithubHandler(w http.ResponseWriter, r *http.Request) {
-	if r.FormValue("state") != "200" {
-		ErrorHandler(w, r, http.StatusUnauthorized)
-	}
 	code := r.FormValue("code")
 	client := &GithubClient{}
 	if code != "" {
-		res := GITHUB_CONFIG.Token(code, "200")
+		res := GITHUB_CONFIG.Token(code)
 		client = Client_Github(res)
 	}
 	Oauth_user, _ = data.GetUserByEmail(client.Email)

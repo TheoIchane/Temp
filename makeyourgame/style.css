@@ -46,3 +46,19 @@
     background-image: url(sprite/pacmanD.png);
     background-position-x: 0px;
 }
+
+.blinky {
+    background-color: red;
+}
+
+.pinky {
+    background-color: pink;
+}
+
+.inky {
+    background-color: cyan;
+}
+
+.clyde {
+    background-color: orange;
+}
